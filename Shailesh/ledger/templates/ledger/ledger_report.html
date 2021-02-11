@@ -1,0 +1,47 @@
+{% extends 'base_template.html' %}
+{% block content %}
+    <a href="{% url 'add-trancation' id=client.id %}">
+        <span style="font-size: 30px; font-weight: bolder;">
+         {{ client.name }}
+    </span>
+    </a>
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Sector</th>
+            <th>Date</th>
+            <th>Booking Date</th>
+            <th>Passenger Name</th>
+            <th>Remarks</th>
+            <th>Balance</th>
+            <th>Generate</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for trancation in tran %}
+                <tr class="table-primary">
+                    <td style="width: 5%;">{{ trancation.amount }}</td>
+                    <td style="width: 10%;">{{ trancation.sector }}</td>
+                    <td style="width: 12%;">{{ trancation.date }}</td>
+                    <td>{{ trancation.booking_date }}</td>
+                    <td>{{ trancation.passenger_list }}</td>
+                    <td>{{ trancation.remarks }}</td>
+                    <td>
+                        {{ trancation.bal }}
+                    </td>
+                <td>
+                    <a class="btn btn-primary"
+                       href="{% url 'client-report' id=trancation.id client_id=client.id %}"></a>
+                </td>
+                </tr>
+
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock %}

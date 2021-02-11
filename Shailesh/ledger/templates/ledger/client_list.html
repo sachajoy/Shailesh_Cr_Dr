@@ -24,7 +24,8 @@
                             {% else %} bg-primary
                         {% endif %} ">
 
-                <th><a style="color: white;" href="{% url 'client-detials' id=client.id %}">{{ client.name }}</a></th>
+                <th><a style="color: white;"
+                       href="{% url 'add-trancation' id=client.id %}">{{ client.name }}</a></th>
 
                 <td>{{ client.mobno }}</td>
                 <td>{{ client.val }}</td>

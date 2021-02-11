@@ -12,19 +12,22 @@ class Client(models.Model):
         return "{}, {}".format(self.name, self.mobno)
 
 
-    def get_absolute_url(self):
-        return reverse('add-trancation')
 
 
 class Trancation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     sector = models.CharField(null=False, max_length=100)
     amount = models.IntegerField(null=False)
-    remarks = models.TextField()
-    date = models.DateField(default=datetime.date.today)
+    remarks = models.TextField(null=True, blank=True)
+    date = models.TextField()
+    booking_date = models.DateField(default=datetime.date.today)
+    passenger_list = models.TextField(null=True)
+    verifed = models.BooleanField(default=False)
+    cleared = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['client', '-date', 'amount']
+        ordering = ['booking_date']
+
 
     def __str__(self):
         return "{} - {}".format(self.client, self.date)

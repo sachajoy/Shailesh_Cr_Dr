@@ -1,7 +1,7 @@
 {% extends 'base_template.html' %}
 
 {% block content %}
-    <table class="table table-bordered table-dark">
+    <table class="table table-bordered table-sm">
         <thead>
         <tr>
             <th>Name</th>
@@ -18,21 +18,50 @@
         </tfoot>
         <tbody>
         {% for client in pending %}
-            {% if client.val > 0 %}
-                <tr class="{% if client.val > 0 %}
-                            bg-danger
-                            {% elif client < 0 %}bg-success
-                            {% else %} bg-primary
-                        {% endif %} ">
+            <tr>
+                {% if client.val > 0 %}
                     <th>
-                        <a style="color: white;" href="{% url 'client-detials' id=client.id %}">
+                        <a href="{% url 'add-trancation' id=client.id %}">
                             {{ client.name }}
                         </a>
                     </th>
                     <td>{{ client.mobno }}</td>
-                    <td>{{ client.val }}</td>
-                </tr>
-            {% endif %}
+                    <td style="background-color: {% if client.val > 0 %}
+                        red
+                    {% elif client.val < 0 %}
+                        green
+
+                    {% endif %};">
+
+                        {{ client.val }}
+
+                    </td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        {% for client in pending %}
+            <tr>
+                {% if client.val <= 0 %}
+                    <th>
+                        <a href="{% url 'add-trancation' id=client.id %}">
+                            {{ client.name }}
+                        </a>
+                    </th>
+                    <td>{{ client.mobno }}</td>
+                    <td style="background-color: {% if client.val > 0 %}
+                        red
+                    {% elif client.val < 0 %}
+                        green
+                    {% endif %};">
+
+                        {{ client.val }}
+
+                    </td>
+                {% endif %}
+
+            </tr>
+
 
         {% endfor %}
 

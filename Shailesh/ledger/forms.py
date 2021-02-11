@@ -21,11 +21,22 @@ class DateInput(forms.DateInput):
 
 
 class TrancationForm(ModelForm):
+    remarks = forms.CharField(required=False)
     class Meta:
         model = models.Trancation
-        fields = '__all__'
+        fields = ('booking_date', 'passenger_list',
+                  'date', 'remarks', 'sector',
+                  'amount')
         widgets = {
-            'date': DateInput()
+            'date': forms.TextInput(
+                attrs={'placeholder': 'Date', 'required': 'False'}),
+            'remarks': forms.TextInput(
+                attrs={'placeholder': 'Remarks', 'required': 'false'}),
+            'sector': forms.TextInput(attrs={'placeholder': 'Sector'}),
+            'amount': forms.NumberInput(attrs={'placeholder': 'Amount'}),
+            'booking_date': DateInput(),
+            'passenger_list': forms.TextInput(
+                attrs={'placeholder': 'Passenger List'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -34,3 +45,4 @@ class TrancationForm(ModelForm):
             self.fields[key].widget.attrs.update(
                 {'class': 'form-control form-control-user'}
             )
+

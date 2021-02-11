@@ -1,12 +1,140 @@
 {% extends 'base_template.html' %}
 {% block content %}
-    <form method="post">
-        <div class="form-group row">
-            <div class="col-sm-6 ">
-                {% csrf_token %}
-                {{ form.as_p }}
+    <a href="{% url 'add-trancation' id=trancations.id %}"><span style="font-size: 30px; font-weight: bolder;">
+         {{ trancations.name }}
+
+    </span></a>
+    <a class="btn btn-primary" href="{% url 'client-ledger' id=trancations.id %}">Ledger Records</a>
+
+    <form method="post" style="margin-top: 10px;">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-1" style="padding: 0px; margin: 0px;">
+                {{ form.amount }}
+            </div>
+            <div class="col-2" style="padding: 0px; margin: 0px;">
+                {{ form.sector }}
+            </div>
+            <div class="col-1" style="padding: 0px; margin: 0px;">
+                {{ form.date }}
+            </div>
+            <div class="col-2" style="padding: 0px; margin: 0px;">
+                {{ form.booking_date }}
+            </div>
+            <div class="col-3" style="padding: 0px; margin: 0px;">
+                {{ form.passenger_list }}
+            </div>
+            <div class="col-2" style="padding: 0px; margin: 0px;">
+                <div class="input-group">
+                    {{ form.remarks }}
+
+                </div>
+
+            </div>
+            <div class="col-1">
                 <input type="submit" class="btn btn-success" value="submit">
             </div>
+
         </div>
     </form>
+
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Sector</th>
+            <th>Date</th>
+            <th>Booking Date</th>
+            <th>Passenger Name</th>
+            <th>Remarks</th>
+            <th>Is verifed</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Amount</th>
+            <th>Sector</th>
+            <th>Date</th>
+            <th>Booking Date</th>
+            <th>Passenger Name</th>
+            <th>Remarks</th>
+            <th>Is verifed</th>
+        </tr>
+        </tfoot>
+        <tbody>
+
+        {% for trancation in trancations.trancation_set.all %}
+            {% if trancation.amount > 0 %}
+                <tr>
+                    <td style="width: 5%;">
+                        <a href="{% url 'tran-update' pk=trancation.id client_id=trancations.id %}">
+                            {{ trancation.amount }}
+                        </a>
+                    </td>
+                    <td style="width: 10%;">{{ trancation.sector }}</td>
+                    <td style="width: 12%;">{{ trancation.date }}</td>
+                    <td>{{ trancation.booking_date }}</td>
+                    <td>{{ trancation.passenger_list }}</td>
+                    <td>{{ trancation.remarks }}</td>
+                    <td>
+                        <a href="{% url 'verifed-entry' id=trancation.id client_id=trancations.id %}"
+                           class="btn {% if trancation.verifed %}
+                        btn-success {% else %} btn-danger
+                    {% endif %} "></a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr>
+            <th>Amount</th>
+            <th>Sector</th>
+            <th>Date</th>
+            <th>Booking Date</th>
+            <th>Passenger Name</th>
+            <th>Remarks</th>
+            <th>Is verifed</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Amount</th>
+            <th>Sector</th>
+            <th>Date</th>
+            <th>Booking Date</th>
+            <th>Passenger Name</th>
+            <th>Remarks</th>
+            <th>Is verifed</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        {% for trancation in trancations.trancation_set.all %}
+            {% if trancation.amount < 0 %}
+                <tr>
+                    <td><a href="{% url 'tran-update' pk=trancation.id client_id=trancations.id %}">
+                            {{ trancation.amount }}
+                        </a></td>
+                    <td>{{ trancation.sector }}</td>
+                    <td>{{ trancation.date }}</td>
+                    <td>{{ trancation.booking_date }}</td>
+                    <td>{{ trancation.passenger_list }}</td>
+                    <td>{{ trancation.remarks }}</td>
+                    <td>
+                        <a href="{% url 'verifed-entry' id=trancation.id client_id=trancations.id %}"
+                           class="btn {% if trancation.verifed %}
+                        btn-success {% else %} btn-danger
+                    {% endif %} "></a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
 {% endblock %}
