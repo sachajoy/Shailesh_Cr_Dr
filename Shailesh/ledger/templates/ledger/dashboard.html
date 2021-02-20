@@ -1,69 +1,39 @@
 {% extends 'base_template.html' %}
 
 {% block content %}
+
     <table class="table table-bordered table-sm">
         <thead>
         <tr>
             <th>Name</th>
-            <th>Mobile Number</th>
-            <th>Amount</th>
+            <th style="text-align: center;">Amount ( {{ total  }}  )</th>
         </tr>
         </thead>
-        <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Mobile Number</th>
-            <th>Amount</th>
-        </tr>
-        </tfoot>
+
         <tbody>
         {% for client in pending %}
             <tr>
-                {% if client.val > 0 %}
+
                     <th>
                         <a href="{% url 'add-trancation' id=client.id %}">
                             {{ client.name }}
                         </a>
                     </th>
-                    <td>{{ client.mobno }}</td>
                     <td style="background-color: {% if client.val > 0 %}
-                        red
+                        #ff5733
                     {% elif client.val < 0 %}
-                        green
+                        #4CAF50
 
-                    {% endif %};">
+                    {% endif %}; text-align: center;">
 
                         {{ client.val }}
 
                     </td>
-                {% endif %}
+
 
             </tr>
         {% endfor %}
-        {% for client in pending %}
-            <tr>
-                {% if client.val <= 0 %}
-                    <th>
-                        <a href="{% url 'add-trancation' id=client.id %}">
-                            {{ client.name }}
-                        </a>
-                    </th>
-                    <td>{{ client.mobno }}</td>
-                    <td style="background-color: {% if client.val > 0 %}
-                        red
-                    {% elif client.val < 0 %}
-                        green
-                    {% endif %};">
 
-                        {{ client.val }}
-
-                    </td>
-                {% endif %}
-
-            </tr>
-
-
-        {% endfor %}
 
         </tbody>
     </table>

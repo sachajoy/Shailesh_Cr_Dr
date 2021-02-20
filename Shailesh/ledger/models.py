@@ -3,13 +3,12 @@ import datetime
 from django.shortcuts import reverse
 class Client(models.Model):
     name = models.CharField(null=False, max_length=56)
-    mobno = models.CharField(max_length=11)
 
     class Meta:
         ordering = ['name']
 
     def __str__(self):
-        return "{}, {}".format(self.name, self.mobno)
+        return "{}, {}".format(self.name)
 
 
 
@@ -20,7 +19,7 @@ class Trancation(models.Model):
     amount = models.IntegerField(null=False)
     remarks = models.TextField(null=True, blank=True)
     date = models.TextField()
-    booking_date = models.DateField(default=datetime.date.today)
+    booking_date = models.DateField()
     passenger_list = models.TextField(null=True)
     verifed = models.BooleanField(default=False)
     cleared = models.BooleanField(default=False)

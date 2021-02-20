@@ -16,6 +16,14 @@ urlpatterns = [
     path('client-detail-verifed/<int:id>/<int:client_id>/',
          views.update_entry_verified,
          name='verifed-entry'),
-    path('client-report/<int:id>/<int:client_id>', views.client_report, name='client-report'),
-    path('client-ledger/<int:id>', views.ledger_of_client, name='client-ledger'),
+    path('client-report/<int:id>/<int:client_id>', views.client_report,
+         name='client-report'),
+    path('client-ledger/<int:id>', views.ledger_of_client,
+         name='client-ledger'),
+    path('from-to/<int:id>', views.from_to_report,
+         name='from-to'),
+    path('delete/<int:pk>/<int:client_id>',
+         views.TranctionDeleteView.as_view(), name='delete-tranction'),
+    path('update-client/<int:pk>', views.ClientUpdateView.as_view(),
+         name='update-client')
 ]
